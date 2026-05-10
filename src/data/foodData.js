@@ -1,0 +1,34 @@
+export let Food=[
+    {
+       id:1,
+       number:1,
+       color:"black",
+       male:false,
+       female:true, 
+       foodAmount:200
+    },
+    {
+       id:2,
+       number:2,
+       color:"gold",
+       male:false, 
+       female:true,
+       foodAmount:200 
+    },
+    {
+        id:3,
+        number:3,
+        color:"black",
+        male:true, 
+        female:false,
+        foodAmount:100
+    },
+    {
+    id:4,
+    number:4,
+    color:"harlyQuin",
+    male:true, 
+    female:false,
+    foodAmount:100
+    }
+]
