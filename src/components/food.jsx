@@ -1,8 +1,24 @@
 import React from "react";
+import {Food} from './../data/foodData.js';
+
+
+
+
+
+
 function FoodPage(){
   const sliderRef = React.useRef(null);
+const [foodData, setFoodData] = React.useState(Food);
+    console.log(foodData)
 
-    function nextSlide() {
+
+
+
+
+
+
+
+function nextSlide() {
         sliderRef.current.scrollBy({
             left: 350,
             behavior: "smooth"
@@ -44,22 +60,14 @@ function FoodPage(){
                     food
                 </p>
                 <section className="flex flex-row gap-3 justify-start items-center">   
-                    <div className="flex flex-col justify-center items-center cursor-pointer  ">
-                        <img className="w-50 mb-0 " src=" ./../../public/rabbit-logo2.png" alt="food" />
-                        <p>number 1</p>
-                    </div>
-                    <div className="flex flex-col justify-center items-center cursor-pointer  ">
-                        <img className="w-50 mb-0 " src=" ./../../public/rabbit-logo2.png" alt="food" />
-                        <p>number 2</p>
-                    </div>
-                    <div className="flex flex-col justify-center items-center cursor-pointer  ">
-                        <img className="w-50 mb-0 " src=" ./../../public/rabbit-logo2.png" alt="food" />
-                        <p>number 3</p>
-                    </div>
-                    <div className="flex flex-col justify-center items-center cursor-pointer  ">
-                        <img className="w-50 mb-0 " src=" ./../../public/rabbit-logo2.png" alt="food" />
-                        <p>number 4</p>
-                    </div>
+                    {
+                    foodData.map((food) => (
+                        <div className="flex flex-col justify-center items-center cursor-pointer  " key={food.id}>
+                            <img className="w-50 mb-0 " src=" ./../../public/rabbit-logo2.png" alt="food" />
+                            <p>number {food.number}</p>
+                        </div>
+                    ))}
+                   
                 </section>    
                  {/*  ******************************************************************************************/}
                 <div className="relative w-full mt-10">
@@ -72,111 +80,37 @@ function FoodPage(){
                         ←
                     </button>
 
-                    {/* السلايدر */}
+                    {/* السلايدر *********************************************/}
                     <div
                         ref={sliderRef}
-                        className="flex gap-5 overflow-x-hidden scroll-smooth px-16 "
-                    >
-
-                        <div className="min-w-[300px] h-[350px] bg-gray-200 rounded-3xl flex flex-col justify-center items-center cursor-pointer">
+                        className="flex gap-5 overflow-x-hidden scroll-smooth px-16 ">
+                    {
+                    foodData.map((food) => (
+                         <div className="min-w-[300px] h-[350px] bg-gray-200 rounded-3xl flex flex-col justify-center items-center cursor-pointer">
                             <img
                                 className="w-44"
                                 src="./../../public/rabbit-logo2.png"
                                 alt="food"
                             />
                             <p className="text-2xl font-bold mt-5">
-                                number 1
+                                number {food.number}
+                            </p>
+                            <p>
+                                color: {food.color}
+                            </p>
+                            <p>
+                                foodAmount: {food.foodAmount}
+                            </p>
+                            <p>
+                                gender: {food.male ? "male" : "female"}
                             </p>
                         </div>
-
-                        <div className="min-w-[300px] h-[350px] bg-gray-200 rounded-3xl flex flex-col justify-center items-center cursor-pointer">
-                            <img
-                                className="w-44"
-                                src="./../../public/rabbit-logo2.png"
-                                alt="food"
-                            />
-                            <p className="text-2xl font-bold mt-5">
-                                number 2
-                            </p>
-                        </div>
-
-                        <div className="min-w-[300px] h-[350px] bg-gray-200 rounded-3xl flex flex-col justify-center items-center cursor-pointer">
-                            <img
-                                className="w-44"
-                                src="./../../public/rabbit-logo2.png"
-                                alt="food"
-                            />
-                            <p className="text-2xl font-bold mt-5">
-                                number 3
-                            </p>
-                        </div>
-
-                        <div className="min-w-[300px] h-[350px] bg-gray-200 rounded-3xl flex flex-col justify-center items-center cursor-pointer">
-                            <img
-                                className="w-44"
-                                src="./../../public/rabbit-logo2.png"
-                                alt="food"
-                            />
-                            <p className="text-2xl font-bold mt-5">
-                                number 4
-                            </p>
-                        </div>
-
-                        <div className="min-w-[300px] h-[350px] bg-gray-200 rounded-3xl flex flex-col justify-center items-center cursor-pointer">
-                            <img
-                                className="w-44"
-                                src="./../../public/rabbit-logo2.png"
-                                alt="food"
-                            />
-                            <p className="text-2xl font-bold mt-5">
-                                number 5
-                            </p>
-                        </div>
-
-                        <div className="min-w-[300px] h-[350px] bg-gray-200 rounded-3xl flex flex-col justify-center items-center cursor-pointer">
-                            <img
-                                className="w-44"
-                                src="./../../public/rabbit-logo2.png"
-                                alt="food"
-                            />
-                            <p className="text-2xl font-bold mt-5">
-                                number 6
-                            </p>
-                        </div>
-                        <div className="min-w-[300px] h-[350px] bg-gray-200 rounded-3xl flex flex-col justify-center items-center cursor-pointer">
-                            <img
-                                className="w-44"
-                                src="./../../public/rabbit-logo2.png"
-                                alt="food"
-                            />
-                            <p className="text-2xl font-bold mt-5">
-                                number 7
-                            </p>
-                        </div>
-                        <div className="min-w-[300px] h-[350px] bg-gray-200 rounded-3xl flex flex-col justify-center items-center cursor-pointer">
-                            <img
-                                className="w-44"
-                                src="./../../public/rabbit-logo2.png"
-                                alt="food"
-                            />
-                            <p className="text-2xl font-bold mt-5">
-                                number 8
-                            </p>
-                        </div>
-                        <div className="min-w-[300px] h-[350px] bg-gray-200 rounded-3xl flex flex-col justify-center items-center cursor-pointer">
-                            <img
-                                className="w-44"
-                                src="./../../public/rabbit-logo2.png"
-                                alt="food"
-                            />
-                            <p className="text-2xl font-bold mt-5">
-                                number 9
-                            </p>
-                        </div>
-
+                    ))        
+                       
+                    }   
                     </div>
 
-                    {/* سهم اليمين */}
+                    {/* سهم اليمين **************************************************************/}
                     <button
                         onClick={nextSlide}
                         className="absolute right-2 top-1/2 -translate-y-1/2 z-20 bg-white shadow-xl rounded-full w-12 h-12 text-2xl"
