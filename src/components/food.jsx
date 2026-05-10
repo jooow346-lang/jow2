@@ -62,8 +62,8 @@ function nextSlide() {
                 <section className="flex flex-row gap-3 justify-start items-center">   
                     {
                     foodData.map((food) => (
-                        <div className="flex flex-col justify-center items-center cursor-pointer  " key={food.id}>
-                            <img className="w-50 mb-0 " src=" ./../../public/rabbit-logo2.png" alt="food" />
+                        <div className="flex flex-col justify-center items-center cursor-pointer w-50 " key={food.id}>
+                            <img className="w-25 mb-0 " src=" ./../../public/rabbit-logo2.png" alt="food" />
                             <p>number {food.number}</p>
                         </div>
                     ))}
@@ -86,24 +86,27 @@ function nextSlide() {
                         className="flex gap-5 overflow-x-hidden scroll-smooth px-16 ">
                     {
                     foodData.map((food) => (
-                         <div className="min-w-[300px] h-[350px] bg-gray-200 rounded-3xl flex flex-col justify-center items-center cursor-pointer">
+                         <div className="relative min-w-[300px] h-[390px] bg-gray-200 rounded-3xl flex flex-col justify-center items-center cursor-pointer">
                             <img
-                                className="w-44"
+                                className="w-80 top-0 absolute "
                                 src="./../../public/rabbit-logo2.png"
                                 alt="food"
                             />
-                            <p className="text-2xl font-bold mt-5">
-                                number {food.number}
+                            <p className="text-3xl font-bold mt-5 absolute bottom-33">
+                                number <span className="font-bold text-gray-900"> {food.number}</span>
                             </p>
-                            <p>
-                                color: {food.color}
+                            <p className="absolute bottom-27 font-arial text-xl ">
+                                color <span className="font-bold text-gray-900">{food.color}</span>
                             </p>
-                            <p>
-                                foodAmount: {food.foodAmount}
+                            <p className="absolute bottom-20 font-arial text-xl ">
+                                foodAmount <span className="font-bold text-gray-900">{food.foodAmount}</span>
                             </p>
-                            <p>
-                                gender: {food.male ? "male" : "female"}
+                            <p className="absolute bottom-14 font-arial text-xl ">
+                                gender <span className="font-bold text-gray-900">{food.male ? "male" : "female"}</span>
                             </p>
+                            <button className="font-bold w-35 h-12  rounded-3xl bg-[#0071e3] cursor-pointer text-white bottom-1 absolute">
+                                Edit
+                            </button>
                         </div>
                     ))        
                        
@@ -122,7 +125,18 @@ function nextSlide() {
 
                       {/*  ******************************************************************************************/}
             </main>
-
+            <footer className="mt-10 flex flex-col justify-center items-center">
+                <div className="relative">
+                    <img className="justify-center w-250 h-120 rounded-3xl" src="./../../public/Food for rabbits and guinea pigs_ Nutrition-seeds-for-rabbits-and-beetles.jpeg" alt="logo" />
+                    <p className="absolute bottom-80 left-100 font-arial -font-bold text-4xl text-black ">  type of food </p>
+                    <p className="absolute bottom-70 left-105 font-arial -font-bold text-xl text-black ">
+                        super rabbit food
+                    </p>
+                    <button className="font-bold w-45 h-18 bottom-90 left-100  rounded-4xl bg-[#0071e3] cursor-pointer text-white bottom-1 absolute">
+                        change food type
+                    </button>
+                </div>
+            </footer>
         </React.Fragment>
     );
 
