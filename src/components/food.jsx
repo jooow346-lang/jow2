@@ -2,14 +2,11 @@ import React from "react";
 import {Food} from './../data/foodData.js';
 
 
-
-
-
-
 function FoodPage(){
-  const sliderRef = React.useRef(null);
+const sliderRef = React.useRef(null);
 const [foodData, setFoodData] = React.useState(Food);
-    console.log(foodData)
+const [currentFood,setCurrentFood] = React.useState(25000);
+const [boolcurrent,setBoolCurrentFood] = React.useState(false);
 
 
 
@@ -136,6 +133,27 @@ function nextSlide() {
                         change food type
                     </button>
                 </div>
+                <section>
+                    <p className="font-bold font-arial text-black text-5xl w-200 ">
+                        the amount of food i have and i must have every day
+                    </p>
+                    <div className="flex flex-row items-center gap-80 mt-10">
+                        <p className="font-arial text-black text-2xl ">
+                            food i have {currentFood}
+                        </p>
+                        <p className="font-arial text-black text-2xl ">
+                            food i must have
+                        </p>
+                     </div>
+                    <div className="flex flex-row items-center gap-65 mt-8">
+                        <button onClick={EditMountOfFood} className="font-bold w-45 h-12   rounded-4xl bg-[#0071e3] cursor-pointer text-white  ">
+                            Edit amount of food
+                        </button>
+                        <button  className="font-bold w-45 h-12  rounded-4xl bg-[#0071e3] cursor-pointer text-white  ">
+                            Edit conusmed food
+                        </button>
+                    </div>
+                </section>
             </footer>
         </React.Fragment>
     );
