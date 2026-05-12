@@ -7,14 +7,60 @@ const sliderRef = React.useRef(null);
 const [foodData, setFoodData] = React.useState(Food);
 const [currentFood,setCurrentFood] = React.useState(25000);
 const [boolcurrent,setBoolCurrentFood] = React.useState(false);
+// زود دي في أول الـ component
+const [showAddModal, setShowAddModal] = React.useState(false);
+const [newRabbit, setNewRabbit] = React.useState({
+    number: "",
+    color: "",
+    male: true,
+    foodAmount: ""
+});
+const inputRefs = React.useRef([]);
+
+
+function openAddModal() {
+    setNewRabbit({ number: "", color: "", male: true, foodAmount: "" });
+    setShowAddModal(true);
+}
+
+function handleNewRabbitChange(field, value) {
+    setNewRabbit(prev => ({ ...prev, [field]: value }));
+}
+
+function handleAddKeyDown(e, index) {
+    if (e.key === "Enter") {
+        e.preventDefault();
+        if (index + 1 < inputRefs.current.length) {
+            inputRefs.current[index + 1].focus();
+        }
+    }
+}
+
+function confirmAddRabbit() {
+    if (!newRabbit.number || !newRabbit.color || !newRabbit.foodAmount) return;
+    const newId = foodData.length > 0 ? Math.max(...foodData.map(f => f.id)) + 1 : 1;
+    const rabbitToAdd = {
+        id: newId,
+        number: Number(newRabbit.number),
+        color: newRabbit.color,
+        male: newRabbit.male,
+        female: !newRabbit.male,
+        foodAmount: Number(newRabbit.foodAmount)
+    };
+    setFoodData(prev => [...prev, rabbitToAdd]);
+    setShowAddModal(false);
+}
 
 
 
 
+const totalFood = foodData.reduce((sum, item) => {
+  return sum + item.foodAmount;
+}, 0);
 
-
-
-
+function BoolCurrentChange(){
+    setBoolCurrentFood(!boolcurrent);
+}
 function nextSlide() {
         sliderRef.current.scrollBy({
             left: 350,
@@ -138,23 +184,114 @@ function nextSlide() {
                         the amount of food i have and i must have every day
                     </p>
                     <div className="flex flex-row items-center gap-80 mt-10">
+                       {
+                        boolcurrent?(
+                            <input type="number"
+                            className="border-none outline-none focus:outline-none focus:ring-0 font-arial text-black text-2xl"
+                            value={currentFood}
+                            onChange={(e)=>{setCurrentFood(e.target.value);}}
+                            onBlur={()=>{setBoolCurrentFood(false)}}
+                            onKeyDown={(e)=>{if(e.key=="Enter"){e.target.blur()}}}
+                           
+                            />
+                        ):(
+                            <p className="font-arial text-black text-2xl ">the amount of food i have {currentFood}</p>
+                        )
+
+                       }
                         <p className="font-arial text-black text-2xl ">
-                            food i have {currentFood}
-                        </p>
-                        <p className="font-arial text-black text-2xl ">
-                            food i must have
+                            food i must have{totalFood}
                         </p>
                      </div>
                     <div className="flex flex-row items-center gap-65 mt-8">
-                        <button onClick={EditMountOfFood} className="font-bold w-45 h-12   rounded-4xl bg-[#0071e3] cursor-pointer text-white  ">
+                        <button onClick={BoolCurrentChange} className="font-bold w-45 h-12   rounded-4xl bg-[#0071e3] cursor-pointer text-white  ">
                             Edit amount of food
                         </button>
-                        <button  className="font-bold w-45 h-12  rounded-4xl bg-[#0071e3] cursor-pointer text-white  ">
+                        <button onClick={openAddModal} className="font-bold w-45 h-12  rounded-4xl bg-[#0071e3] cursor-pointer text-white  ">
                             Edit conusmed food
                         </button>
                     </div>
                 </section>
+
             </footer>
+           {showAddModal && (
+    <div className="fixed inset-0 bg-black/50 z-50 flex justify-center items-center">
+        <div className="bg-white rounded-3xl p-10 flex flex-col gap-5 min-w-[350px]">
+            <p className="text-2xl font-bold text-black">Add new rabbit</p>
+
+            {/* number */}
+            <div className="flex flex-row items-center gap-4">
+                <p className="text-black font-arial w-28">Number:</p>
+                <input
+                    ref={el => inputRefs.current[0] = el}
+                    type="number"
+                    className="border-2 border-gray-300 rounded-xl px-3 py-2 text-black text-xl outline-none focus:border-[#0071e3] w-32"
+                    value={newRabbit.number}
+                    onChange={e => handleNewRabbitChange("number", e.target.value)}
+                    onKeyDown={e => handleAddKeyDown(e, 0)}
+                    placeholder="e.g. 5"
+                />
+            </div>
+
+            {/* color */}
+            <div className="flex flex-row items-center gap-4">
+                <p className="text-black font-arial w-28">Color:</p>
+                <input
+                    ref={el => inputRefs.current[1] = el}
+                    type="text"
+                    className="border-2 border-gray-300 rounded-xl px-3 py-2 text-black text-xl outline-none focus:border-[#0071e3] w-32"
+                    value={newRabbit.color}
+                    onChange={e => handleNewRabbitChange("color", e.target.value)}
+                    onKeyDown={e => handleAddKeyDown(e, 1)}
+                    placeholder="e.g. black"
+                />
+            </div>
+
+            {/* gender */}
+            <div className="flex flex-row items-center gap-4">
+                <p className="text-black font-arial w-28">Gender:</p>
+                <select
+                    className="border-2 border-gray-300 rounded-xl px-3 py-2 text-black text-xl outline-none focus:border-[#0071e3] w-32"
+                    value={newRabbit.male ? "male" : "female"}
+                    onChange={e => handleNewRabbitChange("male", e.target.value === "male")}
+                >
+                    <option value="male">male</option>
+                    <option value="female">female</option>
+                </select>
+            </div>
+
+            {/* foodAmount */}
+            <div className="flex flex-row items-center gap-4">
+                <p className="text-black font-arial w-28">Food Amount:</p>
+                <input
+                    ref={el => inputRefs.current[2] = el}
+                    type="number"
+                    className="border-2 border-gray-300 rounded-xl px-3 py-2 text-black text-xl outline-none focus:border-[#0071e3] w-32"
+                    value={newRabbit.foodAmount}
+                    onChange={e => handleNewRabbitChange("foodAmount", e.target.value)}
+                    onKeyDown={e => { if (e.key === "Enter") confirmAddRabbit(); }}
+                    placeholder="e.g. 200"
+                />
+            </div>
+
+            <div className="flex flex-row gap-4 mt-4">
+                <button
+                    onClick={confirmAddRabbit}
+                    className="font-bold w-35 h-12 rounded-3xl bg-[#0071e3] cursor-pointer text-white"
+                >
+                    Add ✓
+                </button>
+                <button
+                    onClick={() => setShowAddModal(false)}
+                    className="font-bold w-35 h-12 rounded-3xl bg-gray-400 cursor-pointer text-white"
+                >
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+)}
+
         </React.Fragment>
     );
 
